@@ -35,3 +35,7 @@ def test_negative_distance_is_an_error():
 def test_unknown_rider_is_an_error():
     with pytest.raises(ValueError):
         fare_cents(3, "pilot")
+
+
+def test_part_of_a_km_is_charged_as_a_full_km():
+    assert fare_cents(5.5, "adult") == 250
