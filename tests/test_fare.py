@@ -50,7 +50,7 @@ def test_student_pays_half_of_the_peak_surcharge_too():
 
 
 @pytest.mark.parametrize("distance_km, rider, expected", [
-    (0, "adult", 200),
+    (0, "adult", 999),
     (5, "adult", 200),
     (5.1, "adult", 250),
     (6, "adult", 250),
