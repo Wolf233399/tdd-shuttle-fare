@@ -43,3 +43,7 @@ def test_part_of_a_km_is_charged_as_a_full_km():
 
 def test_peak_hours_add_100_cent_surcharge():
     assert fare_cents(3, "adult", peak=True) == 300
+
+
+def test_student_pays_half_of_the_peak_surcharge_too():
+    assert fare_cents(3, "student", peak=True) == 150
