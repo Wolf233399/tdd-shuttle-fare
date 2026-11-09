@@ -6,7 +6,7 @@ PER_EXTRA_KM_CENTS = 50
 DISCOUNTS = {"adult": 1.0, "student": 0.5, "senior": 0.5, "child": 0.0}
 
 
-def fare_cents(distance_km, rider="adult"):
+def fare_cents(distance_km, rider="adult", peak=False):
     """Return the shuttle fare in cents.
 
     Rules (the specification):
@@ -21,4 +21,7 @@ def fare_cents(distance_km, rider="adult"):
         raise ValueError(f"unknown rider type: {rider}")
     extra_km = max(0, math.ceil(distance_km - INCLUDED_KM))
     full = BASE_FARE_CENTS + extra_km * PER_EXTRA_KM_CENTS
+    if peak:
+        full += 100
+
     return int(full * DISCOUNTS[rider])
