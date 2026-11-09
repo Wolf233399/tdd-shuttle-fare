@@ -47,3 +47,20 @@ def test_peak_hours_add_100_cent_surcharge():
 
 def test_student_pays_half_of_the_peak_surcharge_too():
     assert fare_cents(3, "student", peak=True) == 150
+
+
+@pytest.mark.parametrize("distance_km, rider, expected", [
+    (0, "adult", 200),
+    (5, "adult", 200),
+    (5.1, "adult", 250),
+    (6, "adult", 250),
+    (10, "student", 225),
+    (10, "senior", 225),
+    (100, "child", 0),
+    (4.9, "adult", 200),
+    (5.01, "adult", 250),
+    (20, "senior", 475),
+
+])
+def test_fare_table(distance_km, rider, expected):
+    assert fare_cents(distance_km, rider) == expected
