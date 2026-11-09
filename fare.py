@@ -1,3 +1,5 @@
+import math
+
 BASE_FARE_CENTS = 200
 INCLUDED_KM = 5
 PER_EXTRA_KM_CENTS = 50
@@ -17,6 +19,6 @@ def fare_cents(distance_km, rider="adult"):
         raise ValueError("distance must be non-negative")
     if rider not in DISCOUNTS:
         raise ValueError(f"unknown rider type: {rider}")
-    extra_km = max(0, int(distance_km - INCLUDED_KM))
+    extra_km = max(0, math.ceil(distance_km - INCLUDED_KM))
     full = BASE_FARE_CENTS + extra_km * PER_EXTRA_KM_CENTS
     return int(full * DISCOUNTS[rider])
