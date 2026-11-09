@@ -1,5 +1,5 @@
 import pytest
-from fare import fare_cents
+from fare import fare_cents, weekly_total
 
 
 def test_short_trip_adult_pays_base_fare():
@@ -64,3 +64,24 @@ def test_student_pays_half_of_the_peak_surcharge_too():
 ])
 def test_fare_table(distance_km, rider, expected):
     assert fare_cents(distance_km, rider) == expected
+
+def test_weekly_total_of_no_trips_is_zero():
+    assert weekly_total([]) == 0
+
+
+def test_weekly_total_under_the_cap_is_the_sum():
+    assert weekly_total([200, 200, 200]) == 600
+
+
+def test_weekly_total_exactly_at_the_cap():
+    assert weekly_total([500, 500, 500]) == 1500
+
+
+def test_weekly_total_never_goes_over_the_cap():
+    assert weekly_total([500, 500, 500, 500]) == 1500
+
+
+def test_weekly_total_rejects_a_negative_fare():
+    with pytest.raises(ValueError):
+        weekly_total([200, -50])
+

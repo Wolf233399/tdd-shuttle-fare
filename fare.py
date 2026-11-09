@@ -4,6 +4,8 @@ BASE_FARE_CENTS = 200
 INCLUDED_KM = 5
 PER_EXTRA_KM_CENTS = 50
 PEAK_SURCHARGE_CENTS = 100
+WEEKLY_CAP_CENTS = 1500
+
 
 DISCOUNTS = {"adult": 1.0, "student": 0.5, "senior": 0.5, "child": 0.0}
 
@@ -28,3 +30,13 @@ def fare_cents(distance_km, rider="adult", peak=False):
 
 
     return int(full * DISCOUNTS[rider])
+
+def weekly_total(fares):
+    total = 0
+    for trip in fares:
+        if trip < 0:
+            raise ValueError("fare must be non-negative")
+        total += trip
+    if total > WEEKLY_CAP_CENTS:
+        return WEEKLY_CAP_CENTS
+    return total
